@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomColors{
   static Color primaryTextColor = const Color(0xFFFFFFFF); //Colors.white;
+  static Color secondaryTextColor = const Color(0xFF200D21);
   static Color dividerColor = Colors.white54;
   static Color pageBackgroundColor = const Color(0xFF2D2F41);
   static Color navBackgroundColor = const Color(0x9D2D2F41);
@@ -25,11 +26,11 @@ class CustomColors{
   static Color sdSecondaryColorRed = const Color(0xFFFF5C5C);
   static Color sdSecondaryColorYellow = const Color(0xFFFFA635);
   static Color sdSecondaryColorGreen = const Color(0xFF5DE094);
-  static Color sdIconColor = const Color(0xFFA6A7AA);
+  static Color sdIconColor = const Color(0xFFDB4139);
   static Color sdSmokeColorLight = const Color(0xFFE8EAEE);
   static Color sdSmokeColor = const Color(0xFFCDD1D1);
   static Color sdShadowColor = const Color(0x95E9EBF0);
-  static Color sdShadowDarkColor = const Color(0x95A3A3A5);
+  static Color sdShadowDarkColor = const Color(0xAADB4139);
   static Color sdAppBackgroundColor = const Color(0xFF200D21);
   static Color sdTransparentColor = const Color(0X00FFFFFF);
 }
