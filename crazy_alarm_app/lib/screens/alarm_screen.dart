@@ -1,5 +1,6 @@
 import 'package:crazy_alarm_app/constants/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class AlarmScreen extends StatelessWidget {
@@ -10,36 +11,41 @@ class AlarmScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final now = DateTime.now();
     final format = DateFormat('Hm');
-    final snoozeTimes = [5, 10, 15, 20];
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         Center(
           child: Container(
-            width: 325,
-            height: 325,
-            decoration: ShapeDecoration(
-                shape: CircleBorder(
-                    side: BorderSide(
-                        color: CustomColors.sdPrimaryBgLightColor,
-                        style: BorderStyle.solid,
-                        width: 10))),
+            width: 300,
+            height: 300,
+            decoration: BoxDecoration(
+              color: CustomColors.sdAppBackgroundColor,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: CustomColors.sdPrimaryBgLightColor,
+                  blurRadius: 8.0,
+                  spreadRadius: 10.0
+                ),
+              ]
+            ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Icon(
                   Icons.alarm,
-                  color: CustomColors.sdPrimaryColor,
-                  size: 32,
+                  color: CustomColors.primaryTextColor,
+                  size: 40,
                 ),
                 Text(
                   format.format(now),
-                  style: TextStyle(
-                      fontSize: 52,
-                      fontWeight: FontWeight.w900,
-                      color: CustomColors.sdPrimaryColor),
+                  style: GoogleFonts.poppins(
+                    textStyle: TextStyle(
+                      color: CustomColors.primaryTextColor,fontSize: 70, fontWeight: FontWeight.w500
+                    )
+                  ),
                 ),
                 SizedBox(
                   width: 250,
@@ -48,39 +54,16 @@ class AlarmScreen extends StatelessWidget {
                     maxLines: 3,
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        color: CustomColors.sdPrimaryColor, fontSize: 16),
+                    style: GoogleFonts.poppins(
+                      textStyle: TextStyle(
+                        color: CustomColors.primaryTextColor,fontSize: 20, fontWeight: FontWeight.w500
+                      )
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-        ),
-        const SizedBox(
-          height: 45,
-        ),
-        GestureDetector(
-          onTap: () async {
-          },
-          child: Text("Snooze", style: TextStyle(color: CustomColors.sdPrimaryColor)),
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: snoozeTimes
-              .map((minutes) => ElevatedButton(
-                    child: const Text("minutes", style: TextStyle(fontSize: 24)),
-                    onPressed: () async {
-                    },
-                  ))
-              .toList(),
-        ),
-        const SizedBox(
-          height: 45,
-        ),
-        ElevatedButton(
-          onPressed: (){}, 
-          child: const Text("Dismiss", style: TextStyle(fontSize: 45))
         ),
       ],
     );

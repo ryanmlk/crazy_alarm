@@ -23,9 +23,7 @@ class CustomColors{
   static Color sdPrimaryColor = const Color(0xFF393F74);
   static Color sdPrimaryColorLight = const Color(0xFF6679CC);
   static Color sdPrimaryBgLightColor = const Color(0xFFDB4139);
-  static Color sdSecondaryColorRed = const Color(0xFFFF5C5C);
-  static Color sdSecondaryColorYellow = const Color(0xFFFFA635);
-  static Color sdSecondaryColorGreen = const Color(0xFF5DE094);
+  static Color sdSecondaryBgLightColor = const Color(0xFFE07670);
   static Color sdIconColor = const Color(0xFFDB4139);
   static Color sdSmokeColorLight = const Color(0xFFE8EAEE);
   static Color sdSmokeColor = const Color(0xFFCDD1D1);
