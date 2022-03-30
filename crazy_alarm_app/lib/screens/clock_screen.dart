@@ -19,9 +19,11 @@ class _ClockScreenState extends State<ClockScreen> {
   @override
   void initState() {
     Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
+      if (mounted){
+        setState(() {
         
-      });
+        });
+      }
     });
     super.initState();
   }
@@ -47,7 +49,7 @@ class _ClockScreenState extends State<ClockScreen> {
               ),
               const SizedBox(height: 60),
               Center(
-                child: Container(
+                child: SizedBox(
                   width: 350,
                   height: 350,
                   child: Transform.rotate(
@@ -113,7 +115,7 @@ class ClockPainter extends CustomPainter{
     ..strokeWidth = 1;
 
     var currentDashBrush = Paint()
-    ..shader = RadialGradient(colors: [Color(0XFFEF224E), Color(0XFF8F0F4B)]).createShader(Rect.fromCircle(center: centre, radius: radius))
+    ..shader = const RadialGradient(colors: [Color(0XFFEF224E), Color(0XFF8F0F4B)]).createShader(Rect.fromCircle(center: centre, radius: radius))
     ..style = PaintingStyle.stroke
     ..strokeCap = StrokeCap.round
     ..strokeWidth = 4;
