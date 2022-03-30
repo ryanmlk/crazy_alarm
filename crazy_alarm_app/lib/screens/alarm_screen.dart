@@ -1,7 +1,9 @@
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:crazy_alarm_app/constants/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:app_launcher/app_launcher.dart';
 
 class AlarmScreen extends StatelessWidget {
   const AlarmScreen({ Key? key }) : super(key: key);
@@ -65,7 +67,27 @@ class AlarmScreen extends StatelessWidget {
             ),
           ),
         ),
+        RaisedButton(
+          child: Text("Snooze Alarm", style: TextStyle(fontSize: 20),),
+          onPressed: () async {
+          await AndroidAlarmManager.periodic(const Duration(seconds: 10), 1, setAlarm);
+
+            Navigator.pushNamed(context, '/question');
+          },
+          color: CustomColors.sdPrimaryBgLightColor,
+          textColor: CustomColors.sdShadowColor,
+          padding: EdgeInsets.all(20.0),
+          splashColor: Colors.grey,
+        )
       ],
     );
   }
+
+}
+
+void setAlarm() async {
+  print('trwelk');
+  await AppLauncher.openApp(
+    androidApplicationId: "com.example.crazy_alarm_app",
+  );
 }
