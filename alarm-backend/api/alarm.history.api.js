@@ -10,7 +10,7 @@ var alarmHistorySchema = mongoose.Schema({
     time: String
 });
 
- var alarmHistory = mongoose.model("alarm", alarmHistorySchema); 
+ var alarmHistory = mongoose.model("alarmHistory", alarmHistorySchema); 
 
 const addAlarmHistory =  async obj => {
     var newItm = new alarmHistory({

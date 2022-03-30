@@ -64,15 +64,5 @@ async function updateAlarm(alarm) {
      return updatedAlarm;
 }
 
-async function deleteAlarm(alarmId) {
-    let deleteDetails = await alarm.deleteOne({ id: alarmId }, function(err, response){
-        if(err)
-            console.log('Unable to delete alarm');
-        else{
-            return response;
-        }
-     });
-     return deleteDetails;
-}
 
-module.exports = {addAlarm,getAlarms,getAlarmsBySeller,updateAlarm,deleteAlarm,getAlarmsByName};
+module.exports = {addAlarm,getAlarms,updateAlarm,deleteAlarm};
