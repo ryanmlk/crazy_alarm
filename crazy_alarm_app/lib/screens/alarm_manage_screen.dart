@@ -13,6 +13,7 @@ class AlarmManageScreen extends StatefulWidget {
 }
 
 class _AlarmManageScreenState extends State<AlarmManageScreen> {
+  TimeOfDay selectedTime = TimeOfDay.now();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -72,19 +73,24 @@ class _AlarmManageScreenState extends State<AlarmManageScreen> {
                         ],
                       ),
                       Divider(thickness: 1, color: CustomColors.dividerColor, height: 40),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            '6:00 AM',
-                            style: GoogleFonts.poppins(
-                              textStyle: TextStyle(
-                                color: CustomColors.secondaryTextColor,fontSize: 50, fontWeight: FontWeight.w600
+                      InkWell(
+                        onTap: (){
+                          _selectTime(context);
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "${selectedTime.hour}:${selectedTime.minute}",
+                              style: GoogleFonts.poppins(
+                                textStyle: TextStyle(
+                                  color: CustomColors.secondaryTextColor,fontSize: 50, fontWeight: FontWeight.w600
+                                )
                               )
-                            )
-                          ),
-                          Icon(Icons.add, color: CustomColors.sdIconColor, size: 35)
-                        ],
+                            ),
+                            Icon(Icons.arrow_forward_ios_rounded, color: CustomColors.sdIconColor, size: 35)
+                          ],
+                        ),
                       ),
                       Divider(thickness: 1, color: CustomColors.dividerColor, height: 40),
                       InkWell(
@@ -104,18 +110,36 @@ class _AlarmManageScreenState extends State<AlarmManageScreen> {
             ),
             const SizedBox(height: 30),
             Center(
-              child: ElevatedButton(
-                onPressed: (){
-                  Navigator.pushNamed(context, '/alarmmanage');
-                }, 
-                child: const Icon(Icons.add, size: 40,),
-                style: ElevatedButton.styleFrom(
-                  shape: const CircleBorder(),
-                  padding: const EdgeInsets.all(10),
-                  primary: CustomColors.sdPrimaryBgLightColor,
-                  shadowColor: CustomColors.sdShadowDarkColor,
-                  elevation: 10,
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: (){
+                      Navigator.pop(context);
+                    }, 
+                    child: const Icon(Icons.close, size: 40,),
+                    style: ElevatedButton.styleFrom(
+                      shape: const CircleBorder(),
+                      padding: const EdgeInsets.all(10),
+                      primary: CustomColors.sdShadowDarkColor,
+                      shadowColor: CustomColors.sdShadowDarkColor,
+                      elevation: 10,
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: (){
+                      Navigator.pop(context);
+                    }, 
+                    child: const Icon(Icons.check, size: 40,),
+                    style: ElevatedButton.styleFrom(
+                      shape: const CircleBorder(),
+                      padding: const EdgeInsets.all(10),
+                      primary: CustomColors.sdPrimaryBgLightColor,
+                      shadowColor: CustomColors.sdShadowDarkColor,
+                      elevation: 10,
+                    ),
+                  ),
+                ],
               ),
             )
           ],
@@ -124,6 +148,20 @@ class _AlarmManageScreenState extends State<AlarmManageScreen> {
       ),
     );
   }
+
+  _selectTime(BuildContext context) async {
+      final TimeOfDay? timeOfDay = await showTimePicker(
+        context: context,
+        initialTime: selectedTime,
+        initialEntryMode: TimePickerEntryMode.dial,
+      );
+      if(timeOfDay != null && timeOfDay != selectedTime) {
+        setState(() {
+          selectedTime = timeOfDay;
+        });
+      }
+  }
+
 }
 
 Widget buildRepeatManager() {
