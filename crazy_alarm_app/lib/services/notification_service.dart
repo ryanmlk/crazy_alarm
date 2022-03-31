@@ -18,7 +18,7 @@ class NotificationService {
   Future<void> initNotification() async {
     tz.initializeTimeZones();
     const AndroidInitializationSettings initializationSettingsAndroid =
-    const AndroidInitializationSettings('@drawable/app_icon   ');
+    const AndroidInitializationSettings('@drawable/app_icon');
     const IOSInitializationSettings initializationSettingsIOS =
     IOSInitializationSettings(
       requestAlertPermission: false,
