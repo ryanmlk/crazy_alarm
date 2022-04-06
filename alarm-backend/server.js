@@ -9,6 +9,7 @@ const corsOptions ={
 const AlarmRoutes = require('./routes/alarm.routes.js')
 const UserRoutes = require('./routes/user.routes.js')
 const AlarmHistoryRoutes = require('./routes/alarm.history.js')
+const NotificationRoutes = require('./routes/notification.routes.js')
 
 const app = new Koa();
 app.use(bodyParser());
@@ -22,6 +23,10 @@ app.use(cors(corsOptions));
 
  app.use(AlarmHistoryRoutes.routes())
  .use(AlarmHistoryRoutes.allowedMethods());
+
+ 
+ app.use(NotificationRoutes.routes())
+ .use(NotificationRoutes.allowedMethods());
 
 app.listen(9090);
 
