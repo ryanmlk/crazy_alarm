@@ -1,62 +1,49 @@
+import 'package:crazy_alarm_app/constants/themes.dart';
+import 'package:crazy_alarm_app/models/alarm_history.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
+class DateChart extends StatelessWidget {
+  List<ChartData> chartData = <ChartData>[];
 
-class DateChart extends StatefulWidget {
-  // ignore: prefer_const_constructors_in_immutables
-  DateChart({Key? key}) : super(key: key);
+  DateChart(List<AlarmHistory> data, {Key? key}) : super(key: key) {
+    //The data for the chart should be passed through the constructor
+    for (var element in data) {
+      chartData.add(ChartData(
+          x: DateTime.parse(element.day), yValue: double.parse(element.time)));
+    }
+  }
 
-  @override
-  _DateChartState createState() => _DateChartState();
-}
-
-class _DateChartState extends State<DateChart> {
-  List<ChartSampleData> chartData = <ChartSampleData>[
-    ChartSampleData(x: DateTime(2015, 1, 1 ), yValue: 1.13),
-    ChartSampleData(x: DateTime(2015, 1, 2 ), yValue: 1.12),
-    ChartSampleData(x: DateTime(2015, 1, 3 ), yValue: 1.08),
-    ChartSampleData(x: DateTime(2015, 1, 4 ), yValue: 1.12),
-    ChartSampleData(x: DateTime(2015, 1, 5 ), yValue: 1.1),
-    ChartSampleData(x: DateTime(2015, 1, 6 ), yValue: 1.12),
-    ChartSampleData(x: DateTime(2015, 1, 7 ), yValue: 1.1),
-    ChartSampleData(x: DateTime(2015, 1, 8 ), yValue: 1.12),
-    ChartSampleData(x: DateTime(2015, 1, 9 ), yValue: 1.16),
-    ChartSampleData(x: DateTime(2015, 1, 10), yValue: 1.1),
-  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Syncfusion Flutter chart'),
-        ),
         body: Center(
-          //Initialize the chart widget
-          child: Container(
-              height: 300,
-              width: 400,
-              child: SfCartesianChart(
-                  backgroundColor: Colors.white,
-                  //Specifying date time interval type as hours
-                  primaryXAxis: DateTimeAxis(
-                      majorGridLines: MajorGridLines(width: 0),
-                      edgeLabelPlacement: EdgeLabelPlacement.shift,
-                      intervalType: DateTimeIntervalType.days),
-                  series: <ChartSeries<ChartSampleData, DateTime>>[
-                    LineSeries<ChartSampleData, DateTime>(
-                      dataSource: chartData,
-                      xValueMapper: (ChartSampleData sales, _) => sales.x,
-                      yValueMapper: (ChartSampleData sales, _) => sales.yValue,
-                      name: 'Sales',
-                    )
-                  ])),
-        ));
+      //The chart widget should be intiliazied here
+      child: Container(
+          height: 320,
+          width: 400,
+          child: SfCartesianChart(
+              backgroundColor: CustomColors.sdAppBackgroundColor,
+              isTransposed: true,
+              primaryXAxis: DateTimeAxis(
+                  majorGridLines: MajorGridLines(width: 0),
+                  edgeLabelPlacement: EdgeLabelPlacement.shift,
+                  intervalType: DateTimeIntervalType.days),
+              series: <ChartSeries<ChartData, DateTime>>[
+                BarSeries<ChartData, DateTime>(
+                  dataSource: chartData,
+                  xValueMapper: (ChartData alarm, _) => alarm.x,
+                  yValueMapper: (ChartData alarm, _) => alarm.yValue,
+                  name: 'Time',
+                )
+              ])),
+    ));
   }
 }
 
-class ChartSampleData {
-  ChartSampleData({this.x, this.yValue});
-
+class ChartData {
+  ChartData({this.x, this.yValue});
   final DateTime? x;
   final double? yValue;
 }
