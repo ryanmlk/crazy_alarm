@@ -18,7 +18,7 @@
     "koa": "^2.13.1",
     "koa-bodyparser": "^4.3.0",
     "koajs": "^1.0.0",
-    "mongoose": "^5.12.7",
+    "mongoose": "5.6.0",
     "nodemailer": "^6.6.0",
     "stripe": "^8.149.0",
     "uuid": "^8.3.2"

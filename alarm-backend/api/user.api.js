@@ -1,14 +1,16 @@
 const uuid = require('uuid');
 const mongoose = require('mongoose');
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useUnifiedTopology', true);
+mongoose.connect('mongodb+srv://ifsapp:ifsapp@cluster0.cc6tj.mongodb.net/crazy-alarm?retryWrites=true&w=majority');
 
 var userSchema = mongoose.Schema({
     id: String,
-    email: String,
+    name: String,
     password: String,
-    type: String,
-    contact: Number,
-    address: String,
-    name: String
+    email: String,
+    dateOfBirth: String,
+    contactNumber: String
  });
 
  var User = mongoose.model("Users", userSchema);
@@ -16,9 +18,11 @@ var userSchema = mongoose.Schema({
 const userSignUp =  async obj => {
     var newUser = new User({
         id: uuid.v4(),
+        name: obj.name,
         password: obj.password,
-        userName: obj.userName,
-        name: obj.name
+        email: obj.email,
+        dateOfBirth: obj.dateOfBirth,
+        contactNumber: obj.con
     });
 
     let savedUser = await newUser.save();
