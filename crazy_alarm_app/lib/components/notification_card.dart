@@ -57,7 +57,8 @@ class NotificationCard extends StatelessWidget {
                               fontWeight: FontWeight.w300))),
                 ],
               ),
-              Icon(Icons.alarm, color: CustomColors.sdIconColor, size: 35)
+              Icon(Icons.notifications,
+                  color: CustomColors.sdIconColor, size: 35)
             ],
           ),
         ),
