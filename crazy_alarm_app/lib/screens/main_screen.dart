@@ -1,6 +1,7 @@
 import 'package:crazy_alarm_app/constants/themes.dart';
 import 'package:crazy_alarm_app/screens/alarm_list_screen.dart';
 import 'package:crazy_alarm_app/screens/alarm_screen.dart';
+import 'package:crazy_alarm_app/screens/chart_screen.dart';
 import 'package:crazy_alarm_app/screens/clock_screen.dart';
 import 'package:crazy_alarm_app/screens/notification_list.dart';
 import 'package:crazy_alarm_app/screens/profile_screen.dart';
@@ -31,7 +32,7 @@ class _MainScreenState extends State<MainScreen> {
     final screens = [
       const ClockScreen(),
       const AlarmListScreen(),
-      const ProfileScreen(),
+      ChartScreen(),
       NotificationListScreen()
     ];
 
