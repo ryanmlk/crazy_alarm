@@ -1,10 +1,14 @@
+const mongoose = require('mongoose');
+
 var alarmScheme = mongoose.Schema({
     id: String,
+    title: String,
     time: String,
-    active: String,
-    tone: String,
-    type: String,
-    days: [Number]
+    active: Boolean,
+    repeat: [{
+        day: String,
+        enabled: Boolean
+    }]
  });
 
- module.exports  = {alarmScheme};
+ module.exports = mongoose.model('alarm', alarmScheme);

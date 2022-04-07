@@ -39,6 +39,7 @@
             android:name="flutterEmbedding"
             android:value="2" />
 
+        <!-- Required Permissions for Alarm Manager -->
         <service
             android:name="dev.fluttercommunity.plus.androidalarmmanager.AlarmService"
             android:permission="android.permission.BIND_JOB_SERVICE"

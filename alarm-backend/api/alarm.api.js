@@ -3,27 +3,15 @@ const mongoose = require('mongoose');
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
 mongoose.connect('mongodb://localhost/shoppingDb');
-
-var alarmSchema = mongoose.Schema({
-    id: String,
-    user: String,
-    time: String,
-    active: String,
-    tone: String,
-    type: String,
-    days: [Number]
-});
-
- var alarm = mongoose.model("alarm", alarmSchema); 
+const alarmSchema = require('../models/alarmModel')
 
 const addAlarm =  async obj => {
-    var newItm = new alarm({
+    var newItm = new alarmSchema({
         id: uuid.v4(),
+        title: obj.title,
         time: obj.time,
         active: obj.active,
-        tone: obj.tone,
-        type: obj.type,
-        days:obj.days,
+        repeat:obj.repeat,
         user:obj.user
     });
 
@@ -34,7 +22,7 @@ const addAlarm =  async obj => {
 
 async function getAlarms(user) {
     let query = {user:user}
-    let alarms = await alarm.find(query,function(err, response){
+    let alarms = await alarmSchema.find(query,function(err, response){
         if(err)
             console.log('Unable to retreive alarms');
         else{
@@ -44,21 +32,21 @@ async function getAlarms(user) {
      return [...alarms.values()];
 }
 
-async function deleteAlarm(AlarmId) {
+async function deleteAlarm(alarmId) {
     var query = { id: alarmId };
-    let alarm = await alarm.deleteOne(query,function(err, obj) {
+    let alarm = await alarmSchema.deleteOne(query,function(err, obj) {
         if (err) {
-            console.log("errorrrrr")
+            console.log("Failed to delete alarm")
         }
         console.log("1 document deleted");
-      });
-      console.log(Alarm)
-     return alarm;
+    });
+    console.log(alarm)
+    return alarm;
 }
 
 async function updateAlarm(alarm) {
     var filter = {id: alarm.id};
-    let updatedAlarm = await alarm.findOneAndReplace(filter, alarm, {
+    let updatedAlarm = await alarmSchema.findOneAndReplace(filter, alarm, {
         new: true,
     });
      return updatedAlarm;

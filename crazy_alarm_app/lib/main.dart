@@ -4,11 +4,12 @@ import 'package:crazy_alarm_app/screens/main_screen.dart';
 import 'package:crazy_alarm_app/screens/question_screen.dart';
 import 'package:crazy_alarm_app/services/notification_service.dart';
 import 'package:flutter/material.dart';
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 
-void main() {
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   NotificationService().initNotification();
-
+  await AndroidAlarmManager.initialize();
 
   runApp(const MyApp());
 }
