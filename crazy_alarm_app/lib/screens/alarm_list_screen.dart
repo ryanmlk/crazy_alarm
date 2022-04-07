@@ -1,20 +1,29 @@
 import 'package:crazy_alarm_app/components/alarm_card.dart';
+import 'package:crazy_alarm_app/models/alarm.dart';
+import 'package:crazy_alarm_app/services/alarm_data_service.dart';
 import 'package:flutter/material.dart';
 import 'package:crazy_alarm_app/constants/themes.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class AlarmListScreen extends StatelessWidget {
+class AlarmListScreen extends StatefulWidget {
   const AlarmListScreen({ Key? key }) : super(key: key);
 
   @override
+  State<AlarmListScreen> createState() => _AlarmListScreenState();
+}
+
+class _AlarmListScreenState extends State<AlarmListScreen> {
+  late Future <List<AlarmConfig>> alarmData;
+  final AlarmDataService _alarmService = new AlarmDataService();
+
+  @override
+  void initState() {
+    super.initState();
+    alarmData =  _alarmService.getAlarms();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final alarms = [
-      1,
-      2,
-      3,
-      4,
-      5
-    ];
 
     return Padding(
       padding: const EdgeInsets.all(20.0),
@@ -34,8 +43,34 @@ class AlarmListScreen extends StatelessWidget {
             height: 450,
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
-              child: Column(
-                children: alarms.map((e) => const AlarmCard()).toList(),
+              child: FutureBuilder <List<AlarmConfig>>(
+                future: alarmData,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    List<AlarmConfig>?  data = snapshot.data;
+                    return
+                      ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: data!.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+                              child: AlarmCard(
+                                  snapshot.data![index].id,
+                                  snapshot.data![index].title,
+                                  snapshot.data![index].time,
+                                  snapshot.data![index].active,
+                                  snapshot.data![index].repeat
+                              ),
+                              );
+                          }
+                      );
+                  } else if (snapshot.hasError) {
+                    return Text("${snapshot.error}");
+                  }
+                  // By default show a loading spinner.
+                  return CircularProgressIndicator();
+                },
               ),
             ),
           ),

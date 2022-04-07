@@ -1,4 +1,8 @@
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:crazy_alarm_app/components/alarm_repeat_dialog.dart';
+import 'package:crazy_alarm_app/models/alarm.dart';
+import 'package:crazy_alarm_app/screens/alarm_screen.dart';
+import 'package:crazy_alarm_app/services/alarm_data_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:crazy_alarm_app/constants/themes.dart';
@@ -14,6 +18,15 @@ class AlarmManageScreen extends StatefulWidget {
 
 class _AlarmManageScreenState extends State<AlarmManageScreen> {
   TimeOfDay selectedTime = TimeOfDay.now();
+  String repeatOption = "Daily";
+  final alarmTitleController = TextEditingController();
+
+  @override
+  void dispose() {
+    alarmTitleController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -59,13 +72,20 @@ class _AlarmManageScreenState extends State<AlarmManageScreen> {
                                   )
                                 )
                               ),
-                              Text(
-                                'Wake up for work',
-                                style: GoogleFonts.poppins(
-                                  textStyle: TextStyle(
-                                    color: CustomColors.secondaryTextColor,fontSize: 25, fontWeight: FontWeight.w800
-                                  )
-                                )
+                              SizedBox(
+                                width: 260,
+                                child: TextField(
+                                  controller: alarmTitleController,
+                                  style: GoogleFonts.poppins(
+                                    textStyle: TextStyle(
+                                      color: CustomColors.secondaryTextColor,fontSize: 25, fontWeight: FontWeight.w800
+                                    )
+                                  ),
+                                  decoration: const InputDecoration(
+                                    border: UnderlineInputBorder(),
+                                    hintText: 'Enter Alarm Name',
+                                  ),
+                                ),
                               ),
                             ],
                           ),
@@ -96,7 +116,7 @@ class _AlarmManageScreenState extends State<AlarmManageScreen> {
                       InkWell(
                         onTap: (){
                           showModalBottomSheet(context: context, builder: (context) {
-                            return const AlarmRepeatDialog();
+                            return AlarmRepeatDialog(selectRepeatOption: _selectRepeatOption,);
                           });
                         },
                         child: buildRepeatManager()
@@ -128,7 +148,7 @@ class _AlarmManageScreenState extends State<AlarmManageScreen> {
                   ),
                   ElevatedButton(
                     onPressed: (){
-                      Navigator.pop(context);
+                      saveAlarm();
                     }, 
                     child: const Icon(Icons.check, size: 40,),
                     style: ElevatedButton.styleFrom(
@@ -162,64 +182,109 @@ class _AlarmManageScreenState extends State<AlarmManageScreen> {
       }
   }
 
-}
+  _selectRepeatOption(String option) {
+    setState(() {
+      repeatOption = option;
+    });
+    Navigator.of(context).pop();
+  }
 
-Widget buildRepeatManager() {
- return Row(
-  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  children: [
-    Text(
-      'Repeat',
-      style: GoogleFonts.poppins(
-        textStyle: TextStyle(
-          color: CustomColors.secondaryTextColor,fontSize: 18, fontWeight: FontWeight.w600
-        )
-      )
-    ),
-    Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  _setAlarm() {
+    AndroidAlarmManager.oneShotAt(DateTime(2022,03,31,18,41), 1, triggerAlarm);
+  }
+
+  Widget buildRepeatManager() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          'Daily  ',
+          'Repeat',
           style: GoogleFonts.poppins(
             textStyle: TextStyle(
-              color: CustomColors.secondaryTextColor,fontSize: 15, fontWeight: FontWeight.w400
+              color: CustomColors.secondaryTextColor,fontSize: 18, fontWeight: FontWeight.w600
             )
           )
         ),
-        Icon(Icons.arrow_forward_ios_rounded, color: CustomColors.secondaryTextColor, size: 18)
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(
+              repeatOption,
+              style: GoogleFonts.poppins(
+                textStyle: TextStyle(
+                  color: CustomColors.secondaryTextColor,fontSize: 15, fontWeight: FontWeight.w400
+                )
+              )
+            ),
+            Icon(Icons.arrow_forward_ios_rounded, color: CustomColors.secondaryTextColor, size: 18)
+          ],
+        ),
       ],
-    ),
-  ],
-  );
-}
+    );
+  }
 
-Widget buildAlarmManager() {
- return Row(
-  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  children: [
-    Text(
-      'Alarm Ringtone',
-      style: GoogleFonts.poppins(
-        textStyle: TextStyle(
-          color: CustomColors.secondaryTextColor,fontSize: 18, fontWeight: FontWeight.w600
-        )
-      )
-    ),
-    Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  Widget buildAlarmManager() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          'Default  ',
+          'Alarm Ringtone',
           style: GoogleFonts.poppins(
             textStyle: TextStyle(
-              color: CustomColors.secondaryTextColor,fontSize: 15, fontWeight: FontWeight.w400
+              color: CustomColors.secondaryTextColor,fontSize: 18, fontWeight: FontWeight.w600
             )
           )
         ),
-        Icon(Icons.arrow_forward_ios_rounded, color: CustomColors.secondaryTextColor, size: 18)
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(
+              'Default  ',
+              style: GoogleFonts.poppins(
+                textStyle: TextStyle(
+                  color: CustomColors.secondaryTextColor,fontSize: 15, fontWeight: FontWeight.w400
+                )
+              )
+            ),
+            Icon(Icons.arrow_forward_ios_rounded, color: CustomColors.secondaryTextColor, size: 18)
+          ],
+        ),
       ],
-    ),
-  ],
-  );
+    );
+  }
+
+  saveAlarm() async {
+    final SnackBar snackBar;
+
+    if(alarmTitleController.text == ""){
+      snackBar = const SnackBar(
+        content: Text('Alarm Title is required'),
+        backgroundColor: Colors.black45,
+      );
+    }
+    else {
+      AlarmConfig alarm = AlarmConfig(
+        '',
+        alarmTitleController.text,
+        formatTimeOfDay(selectedTime),
+        true,
+        [
+          {"day": "Mo", "enabled": true},
+          {"day": "Tu", "enabled": false},
+          {"day": "We", "enabled": false},
+          {"day": "Th", "enabled": true},
+          {"day": "Fr", "enabled": true},
+          {"day": "Sa", "enabled": true},
+          {"day": "Su", "enabled": true}
+        ]
+      );
+      final AlarmDataService _alarmService = new AlarmDataService();
+      _alarmService.save(alarm);
+    }
+  }
+
+}
+
+void triggerAlarm() {
+  return runApp(const AlarmScreen());
 }
