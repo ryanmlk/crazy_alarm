@@ -1,6 +1,15 @@
 FROM node:14-alpine3.13
+
 WORKDIR /app
-COPY . .
+
+COPY package*.json ./
+
 RUN npm install
-EXPOSE 3000/tcp
-CMD ["node", "server.js"]
+
+COPY . .
+
+ENV PORT=9090
+
+EXPOSE 9090
+
+CMD ["npm", "start"]
