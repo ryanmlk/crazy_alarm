@@ -3,7 +3,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:crazy_alarm_app/constants/themes.dart';
 
 class AlarmCard extends StatelessWidget {
-  const AlarmCard({ Key? key }) : super(key: key);
+  final String time;
+  final bool active;
+  final List repeat;
+  final String id;
+  final String title;
+
+  const AlarmCard(this.id, this.title, this.time, this.active, this.repeat);
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +20,10 @@ class AlarmCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Alarm Name',
+                  title,
                   style: GoogleFonts.poppins(
                     textStyle: TextStyle(
                       color: CustomColors.secondaryTextColor,fontSize: 15, fontWeight: FontWeight.w300
@@ -25,7 +31,7 @@ class AlarmCard extends StatelessWidget {
                   )
                 ),
                 Text(
-                  '6:00 AM',
+                  time,
                   style: GoogleFonts.poppins(
                     textStyle: TextStyle(
                       color: CustomColors.secondaryTextColor,fontSize: 25, fontWeight: FontWeight.w800
@@ -33,7 +39,7 @@ class AlarmCard extends StatelessWidget {
                   )
                 ),
                 Text(
-                  'M T W T F S S',
+                  _buildrepeatString(),
                   style: GoogleFonts.poppins(
                     textStyle: TextStyle(
                       color: CustomColors.secondaryTextColor,fontSize: 15, fontWeight: FontWeight.w300
@@ -47,5 +53,15 @@ class AlarmCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _buildrepeatString() {
+    String repeatString = '';
+    for(var day in repeat){
+      if(day['enabled']){
+        repeatString = repeatString + day['day'] + ' ';
+      }
+    }
+    return repeatString;
   }
 }

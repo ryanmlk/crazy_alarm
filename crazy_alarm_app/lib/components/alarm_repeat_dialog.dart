@@ -2,60 +2,48 @@ import 'package:flutter/material.dart';
 import 'package:crazy_alarm_app/constants/themes.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class AlarmRepeatDialog extends StatelessWidget {
-  const AlarmRepeatDialog({ Key? key }) : super(key: key);
+class AlarmRepeatDialog extends StatefulWidget {
+  final Function selectRepeatOption;
+
+  const AlarmRepeatDialog({ Key? key, required this.selectRepeatOption }) : super(key: key);
+
+  @override
+  State<AlarmRepeatDialog> createState() => _AlarmRepeatDialogState();
+}
+
+class _AlarmRepeatDialogState extends State<AlarmRepeatDialog> {
+
+  final repeatOptions = [
+    "Once",
+    "Daily",
+    "Weekdays",
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 230,
+      height: 180,
       color: CustomColors.sdTransparentColor,
       child: Column(
-        children: [
-          ListTile(
-            tileColor: CustomColors.sdShadowColor,
-            autofocus: true,
-            title: Text(
-              'Once',
-              style: GoogleFonts.poppins(
-                textStyle: TextStyle(
-                  color: CustomColors.secondaryTextColor,fontSize: 18, fontWeight: FontWeight.w600
-                )
-              )
-            ),
-          ),
-          ListTile(
-            title: Text(
-              'Daily',
-              style: GoogleFonts.poppins(
-                textStyle: TextStyle(
-                  color: CustomColors.secondaryTextColor,fontSize: 18, fontWeight: FontWeight.w600
-                )
-              )
-            ),
-          ),
-          ListTile(
-            title: Text(
-              'Weekdays',
-              style: GoogleFonts.poppins(
-                textStyle: TextStyle(
-                  color: CustomColors.secondaryTextColor,fontSize: 18, fontWeight: FontWeight.w600
-                )
-              )
-            ),
-          ),
-          ListTile(
-            title: Text(
-              'Custom',
-              style: GoogleFonts.poppins(
-                textStyle: TextStyle(
-                  color: CustomColors.secondaryTextColor,fontSize: 18, fontWeight: FontWeight.w600
-                )
-              )
-            ),
-          ),
-        ],
+        children: repeatOptions.map((option) => repeatTile(option)).toList(),
       ),
+    );
+  }
+
+  Widget repeatTile (String option) {
+    return ListTile(
+      autofocus: true,
+      title: Text(
+        option,
+        style: GoogleFonts.poppins(
+          textStyle: TextStyle(
+            color: CustomColors.secondaryTextColor,fontSize: 18, fontWeight: FontWeight.w600
+          )
+        )
+      ),
+      onTap: () {
+        widget.selectRepeatOption(option);
+      },
     );
   }
 }

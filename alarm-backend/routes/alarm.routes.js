@@ -21,7 +21,7 @@ const router = new Router({
    //Used to update an alarm
    router.patch('/', async ctx => {
     let alarm = ctx.request.body;
-    alarm = await alarmApi.updateAlarm( alarm);
+    alarm = await alarmApi.updateAlarm(alarm);
     ctx.response.status = 201;
     ctx.body = alarm;
     });
@@ -29,7 +29,8 @@ const router = new Router({
    //Used to delete an alarm
    router.delete('/', async ctx => {
        let alarm = ctx.request.body;
-       ctx.body = await alarmApi.deleteAlarm( alarm.id);
+       console.log(alarm);
+       ctx.body = await alarmApi.deleteAlarm(alarm.id);
    })
 
 module.exports = router;
