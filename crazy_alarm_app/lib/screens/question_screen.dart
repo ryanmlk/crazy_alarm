@@ -1,22 +1,21 @@
 import 'dart:math';
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:crazy_alarm_app/constants/themes.dart';
+import 'package:crazy_alarm_app/models/alarm_history.dart';
+import 'package:crazy_alarm_app/services/alarm_history_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class QuestionScreen extends StatefulWidget {
-  const QuestionScreen({ Key? key }) : super(key: key);
+  const QuestionScreen({Key? key}) : super(key: key);
   static String routeName = '/question';
-
+  final AlarmHistoryService _alarmHistoryService = const AlarmHistoryService();
   @override
   _QuestionFormState createState() => _QuestionFormState();
 }
 
 class _QuestionFormState extends State<QuestionScreen> {
-
-  // Create a text controller and use it to retrieve the current value
-  // of the TextField.
   final myController = TextEditingController();
   int num1 = Random().nextInt(100);
   int num2 = Random().nextInt(100);
@@ -28,31 +27,31 @@ class _QuestionFormState extends State<QuestionScreen> {
   void initState() {
     super.initState();
     switch (operator) {
-      case 0 :
+      case 0:
         answer = (num1 / num2) as int;
         operatorString = '$num1 / $num2';
         break;
-      case 1 :
+      case 1:
         answer = (num1 * num2);
         operatorString = '$num1 * $num2';
         break;
-      case 2 :
+      case 2:
         answer = (num1 + num2);
         operatorString = '$num1 + $num2';
         break;
-      case 3 :
+      case 3:
         answer = (num1 - num2);
         operatorString = '$num1 - $num2';
         break;
     }
   }
+
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
     myController.dispose();
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -70,10 +69,8 @@ class _QuestionFormState extends State<QuestionScreen> {
                   BoxShadow(
                       color: CustomColors.sdPrimaryBgLightColor,
                       blurRadius: 8.0,
-                      spreadRadius: 10.0
-                  ),
-                ]
-            ),
+                      spreadRadius: 10.0),
+                ]),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -83,9 +80,9 @@ class _QuestionFormState extends State<QuestionScreen> {
                   style: GoogleFonts.poppins(
                       textStyle: TextStyle(
                           decoration: TextDecoration.none,
-                          color: CustomColors.primaryTextColor,fontSize: 70, fontWeight: FontWeight.w500
-                      )
-                  ),
+                          color: CustomColors.primaryTextColor,
+                          fontSize: 70,
+                          fontWeight: FontWeight.w500)),
                 )
               ],
             ),
@@ -95,8 +92,8 @@ class _QuestionFormState extends State<QuestionScreen> {
           width: 100,
           height: 50,
           decoration: BoxDecoration(
-          color: CustomColors.sdAppBackgroundColor,
-    ),
+            color: CustomColors.sdAppBackgroundColor,
+          ),
           child: Scaffold(
             body: TextField(
               controller: myController,
@@ -104,7 +101,10 @@ class _QuestionFormState extends State<QuestionScreen> {
           ),
         ),
         RaisedButton(
-          child: Text("Submit Answer", style: TextStyle(fontSize: 20),),
+          child: const Text(
+            "Submit Answer",
+            style: TextStyle(fontSize: 20),
+          ),
           onPressed: onAnswerSubmit,
           color: CustomColors.sdPrimaryBgLightColor,
           textColor: CustomColors.sdShadowColor,
@@ -115,10 +115,14 @@ class _QuestionFormState extends State<QuestionScreen> {
     );
   }
 
-
   void onAnswerSubmit() {
     setState(() {
-      if (answer ==  int. parse(myController.text)){
+      if (answer == int.parse(myController.text)) {
+        final random = Random();
+        var id = random.nextInt(1073741824);
+        double time = DateTime.now().hour + (DateTime.now().second / 60);
+        widget._alarmHistoryService.save(AlarmHistory(
+            id.toString(), DateTime.now().toString(), time.toString()));
         Navigator.pushNamed(context, '/');
       } else {
         Navigator.pushNamed(context, '/question');
@@ -126,4 +130,3 @@ class _QuestionFormState extends State<QuestionScreen> {
     });
   }
 }
-
