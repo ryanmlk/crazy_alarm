@@ -14,10 +14,9 @@ const router = new Router({
              token = jsonwebtoken.sign({
                 id: user.id,
                 email: user.email,
-                type: user.type,
-                phone: user.phoneNumber,
-                address: user.address,
-                type:user.type
+                contactNumber: user.contactNumber,
+                name: user.name,
+                dateOfBirth: user.dateOfBirth,
             }, "jwtSecret")
             ctx.body = {user:user,token:token};
             ctx.response.status = 201;
