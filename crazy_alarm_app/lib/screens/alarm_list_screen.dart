@@ -34,17 +34,17 @@ class AlarmListScreen extends StatelessWidget {
             height: 450,
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
-              child: Container(
-                child: Column(
-                  children: alarms.map((e) => const AlarmCard()).toList(),
-                ),
+              child: Column(
+                children: alarms.map((e) => const AlarmCard()).toList(),
               ),
             ),
           ),
           const SizedBox(height: 30),
           Center(
             child: ElevatedButton(
-              onPressed: (){}, 
+              onPressed: (){
+                Navigator.pushNamed(context, '/alarmmanage');
+              }, 
               child: const Icon(Icons.add, size: 40,),
               style: ElevatedButton.styleFrom(
                 shape: const CircleBorder(),

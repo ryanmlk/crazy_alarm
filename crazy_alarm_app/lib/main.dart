@@ -1,3 +1,4 @@
+import 'package:crazy_alarm_app/screens/alarm_manage_screen.dart';
 import 'package:crazy_alarm_app/screens/alarm_screen.dart';
 import 'package:crazy_alarm_app/screens/main_screen.dart';
 import 'package:crazy_alarm_app/screens/question_screen.dart';
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
         initialRoute: MainScreen.routeName,
         routes: {
             MainScreen.routeName: (context) => const MainScreen(),
+            AlarmManageScreen.routeName: (context) => const AlarmManageScreen(),
             QuestionScreen.routeName: (context) => const QuestionScreen(),
             AlarmScreen.routeName: (context) => const AlarmScreen()
         },
