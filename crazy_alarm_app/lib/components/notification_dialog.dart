@@ -7,6 +7,7 @@ import 'package:crazy_alarm_app/services/notification_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
@@ -15,13 +16,14 @@ class NotificationDialog extends StatefulWidget {
   final String mode;
   final NotificationConfig notificationConfig;
 
-  NotificationDialog(this.mode, this.notificationConfig);
+  const NotificationDialog(this.mode, this.notificationConfig);
 
   @override
   _NotificationDialogState createState() => _NotificationDialogState();
 }
 
 class _NotificationDialogState extends State<NotificationDialog> {
+  //Initialized
   @override
   void initState() {
     super.initState();
@@ -65,129 +67,206 @@ class _NotificationDialogState extends State<NotificationDialog> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: CustomColors.sdAppBackgroundColor,
-        title: Text('Set Notification'),
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  width: 300,
-                  child: TextFormField(
-                    cursorColor: Theme.of(context).cursorColor,
-                    controller: titleController,
-                    decoration: const InputDecoration(
-                      labelText: 'Notification Title',
-                      labelStyle: TextStyle(),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Container(
-                  width: 50,
-                  child: IconButton(
-                    onPressed: () => () {},
-                    icon: const Icon(Icons.title),
-                  ),
-                )
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  width: 300,
-                  child: TextFormField(
-                    enabled: false,
-                    cursorColor: Theme.of(context).cursorColor,
-                    controller: _timeValue,
-                    decoration: const InputDecoration(
-                      labelText: 'Set Time',
-                      labelStyle: TextStyle(),
-                    ),
-                  ),
-                ),
-                Container(
-                  width: 50,
-                  child: IconButton(
-                    onPressed: () => _selectDateTime(),
-                    icon: const Icon(Icons.alarm),
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  width: 300,
-                  child: TextFormField(
-                    cursorColor: Theme.of(context).cursorColor,
-                    controller: messageController,
-                    decoration: const InputDecoration(
-                      labelText: 'Message',
-                      labelStyle: TextStyle(),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Container(
-                  width: 50,
-                  child: IconButton(
-                    onPressed: () => {},
-                    icon: const Icon(Icons.message),
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                if (widget.mode == 'NEW')
-                  ElevatedButton(
-                    onPressed: _addNotification,
-                    child: const Icon(
-                      Icons.input,
-                      size: 30,
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      shape: const CircleBorder(),
-                      padding: const EdgeInsets.all(10),
-                      primary: CustomColors.sdPrimaryBgLightColor,
-                      shadowColor: CustomColors.sdShadowDarkColor,
-                      elevation: 10,
-                    ),
-                  ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+            Text('New Notification',
+                style: GoogleFonts.poppins(
+                    textStyle: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 45,
+                        fontWeight: FontWeight.w500))),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
+              child: Card(
+                color: CustomColors.sdTransparentColor,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    ElevatedButton.icon(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(CustomColors.sdAppBackgroundColor),
-                    ),
-                    icon: Icon(Icons.update),
-                    label: Text('Modify'),
-                    onPressed: updateNotification,
-                  ),
-                    ElevatedButton.icon(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(CustomColors.sdAppBackgroundColor),
+                    Container(
+                      width: 300,
+                      height: 100,
+                      child: TextFormField(
+                        cursorColor: Theme.of(context).cursorColor,
+                        controller: titleController,
+                        style: TextStyle(color: Colors.white),
+                        decoration: const InputDecoration(
+                          labelText: 'Notification Title',
+                          labelStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w300),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                          ),
+                        ),
                       ),
-                      icon: Icon(Icons.delete),
-                      label: Text('Delete'),
-                      onPressed: deleteNotification,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Container(
+                      width: 50,
+                      height: 50,
+                      child: IconButton(
+                        onPressed: () => () {},
+                        icon: const Icon(Icons.title),
+                      ),
                     )
                   ],
-                )
-
+                ),
+              ),
+            ),
+            Card(
+              color: CustomColors.sdTransparentColor,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    width: 300,
+                    height: 100,
+                    child: TextFormField(
+                      cursorColor: Theme.of(context).cursorColor,
+                      controller: messageController,
+                      style: TextStyle(color: Colors.white),
+                      decoration: const InputDecoration(
+                        labelText: 'Message',
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        labelStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w300),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Container(
+                    width: 50,
+                    child: IconButton(
+                      onPressed: () => {},
+                      icon: const Icon(Icons.message),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Card(
+              color: CustomColors.sdTransparentColor,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    width: 300,
+                    height: 100,
+                    child: TextFormField(
+                      enabled: true,
+                      readOnly: true,
+                      cursorColor: Theme.of(context).cursorColor,
+                      controller: _timeValue,
+                      style: TextStyle(color: Colors.white),
+                      decoration: const InputDecoration(
+                        labelText: 'Set Time',
+                        labelStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w300),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Container(
+                    width: 50,
+                    child: IconButton(
+                      onPressed: () => _selectDateTime(),
+                      icon: const Icon(Icons.alarm),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (widget.mode == 'NEW')
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0,20,0,0),
+                    child: Row(
+                      children: [
+                        ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                            primary: CustomColors.sdAppBackgroundColor,
+                              minimumSize: Size(50,
+                                  70) // put the width and height you want
+                              ),
+                          icon: Icon(Icons.save),
+                          label: Text('Create'),
+                          onPressed: _addNotification,
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                              primary: CustomColors.sdAppBackgroundColor,
+                              minimumSize: Size(50,
+                                  70) // put the width and height you want
+                          ),
+                          icon: Icon(Icons.save),
+                          label: Text('Cancel'),
+                          onPressed: () {
+                            Navigator.of(context, rootNavigator: true)
+                                .pop(context);
+                          },
+                        )
+                      ],
+                    ),
+                  )
+                else
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0,20,0,0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                              primary: CustomColors.sdAppBackgroundColor,
+                              minimumSize: Size(50,
+                                  70) // put the width and height you want
+                          ),
+                          icon: Icon(Icons.update),
+                          label: Text('Modify'),
+                          onPressed: updateNotification,
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                              primary: CustomColors.sdAppBackgroundColor,
+                              minimumSize: Size(50,
+                                  70) // put the width and height you want
+                          ),
+                          icon: Icon(Icons.delete),
+                          label: Text('Delete'),
+                          onPressed: deleteNotification,
+                        )
+                      ],
+                    ),
+                  )
               ],
             )
           ],
@@ -203,6 +282,7 @@ class _NotificationDialogState extends State<NotificationDialog> {
         messageController.text,
         titleController.text,
         _timeValue.text));
+    print('trwelk');
     NotificationService().showNotification(
       id,
       titleController.text,
@@ -215,19 +295,30 @@ class _NotificationDialogState extends State<NotificationDialog> {
   }
 
   Future<void> deleteNotification() async {
-    int response = await _notificationDataService.delete(int.parse(widget.notificationConfig.id));
+    int response = await _notificationDataService
+        .delete(int.parse(widget.notificationConfig.id));
     if (response == 200) {
+      NotificationService()
+          .CancelNotification(int.parse(widget.notificationConfig.id));
       Navigator.of(context).pop();
     }
   }
 
   Future<void> updateNotification() async {
-    int response =  await _notificationDataService.update(NotificationConfig(
+    int response = await _notificationDataService.update(NotificationConfig(
         widget.notificationConfig.id,
         messageController.text,
         titleController.text,
         _timeValue.text));
     if (response != 500) {
+      NotificationService()
+          .CancelNotification(int.parse(widget.notificationConfig.id));
+      NotificationService().showNotification(
+        int.parse(widget.notificationConfig.id),
+        titleController.text,
+        messageController.text,
+        _timeValue.text,
+      );
       Navigator.of(context).pop();
     }
   }

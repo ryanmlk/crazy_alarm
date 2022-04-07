@@ -1,8 +1,5 @@
 const uuid = require('uuid');
 const mongoose = require('mongoose');
-mongoose.set('useNewUrlParser', true);
-mongoose.set('useUnifiedTopology', true);
-mongoose.connect('mongodb://localhost/shoppingDb');
 
 var notificationSchema = mongoose.Schema({
     id: String,

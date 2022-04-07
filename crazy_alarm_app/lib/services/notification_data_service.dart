@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
 class NotificationDataService {
-  static const String endpoint = 'http://10.0.2.2:9090/notifications';
+  static const String endpoint = 'https://crazy-alarm-api.herokuapp.com/notifications';
 
   const NotificationDataService();
 
@@ -48,8 +48,9 @@ class NotificationDataService {
     },body: <String,String> {
       'id':id.toString()
     });
-    if (response.statusCode != 200)
+    if (response.statusCode != 200) {
       return Future.error("error: status code ${response.statusCode}");
+    }
     return response.statusCode;
   }
 
@@ -62,8 +63,9 @@ class NotificationDataService {
       'title': notification.title,
       'message': notification.message,
       'datetime': notification.datetime    });
-    if (response.statusCode != 201)
+    if (response.statusCode != 201) {
       return Future.error("error: status code ${response.statusCode}");
+    }
     return response.statusCode;
   }
 }
