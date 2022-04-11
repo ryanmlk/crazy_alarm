@@ -27,7 +27,7 @@ class NotificationCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                    DateFormat("yyyy-MM-dd hh:mm")
+                    DateFormat("yyyy-MM-dd HH:mm")
                         .format(DateTime.parse(datetime)),
                     style: GoogleFonts.poppins(
                         textStyle: TextStyle(
