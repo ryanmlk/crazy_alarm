@@ -48,33 +48,36 @@ class AlarmDataService {
       },
       body: json.encode(alarm)
     );
+    print(response.statusCode);
     return response.statusCode;
   }
 
-  Future<int> delete(int id) async {
+  Future<int> delete(String id) async {
     final url = Uri.parse(endpoint);
     var response = await http.delete(url,headers:<String, String> {
       'Context-Type': 'application/json; charset=UTF-8',
     },body: <String,String> {
-      'id':id.toString()
+      'id':id
     });
     if (response.statusCode != 200)
       return Future.error("error: status code ${response.statusCode}");
+    print(response.statusCode);
     return response.statusCode;
   }
 
   Future<int> update(AlarmConfig alarm) async {
     final url = Uri.parse(endpoint);
-    var response = await http.patch(url,headers:<String, String> {
-      'Context-Type': 'application/json; charset=UTF-8',
-    },body: <String,dynamic> {
-      'id':alarm.id,
-      'title':alarm.title,
-      'time': alarm.time,
-      'active': alarm.active,
-      'repeat': alarm.repeat    });
+    var response = await http.patch(
+      url,
+      headers:{
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: json.encode(alarm)
+    );
     if (response.statusCode != 201)
       return Future.error("error: status code ${response.statusCode}");
+    print(response.statusCode);
     return response.statusCode;
   }
 }
