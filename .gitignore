@@ -64,3 +64,4 @@ crazy_alarm_app/windows/runner/Runner.rc
 crazy_alarm_app/windows/runner/utils.cpp
 crazy_alarm_app/windows/runner/utils.h
 crazy_alarm_app/windows/runner/win32_window.cpp
+crazy_alarm_app/windows/runner/win32_window.h
