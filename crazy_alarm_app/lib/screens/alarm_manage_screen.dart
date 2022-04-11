@@ -365,6 +365,7 @@ class _AlarmManageScreenState extends State<AlarmManageScreen> {
     var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
       'alarm_notif',
       'alarm_notif',
+      sound: RawResourceAndroidNotificationSound('ringtone'),
       icon: 'app_icon',
       largeIcon: DrawableResourceAndroidBitmap('app_icon'),
     );
