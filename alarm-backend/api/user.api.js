@@ -1,14 +1,16 @@
 const uuid = require('uuid');
 const mongoose = require('mongoose');
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useUnifiedTopology', true);
+mongoose.connect('mongodb+srv://ifsapp:ifsapp@cluster0.cc6tj.mongodb.net/crazy-alarm?retryWrites=true&w=majority');
 
 var userSchema = mongoose.Schema({
     id: String,
-    email: String,
+    name: String,
     password: String,
-    type: String,
-    contact: Number,
-    address: String,
-    name: String
+    email: String,
+    dateOfBirth: String,
+    contactNumber: String
  });
 
  var User = mongoose.model("Users", userSchema);
@@ -16,14 +18,33 @@ var userSchema = mongoose.Schema({
 const userSignUp =  async obj => {
     var newUser = new User({
         id: uuid.v4(),
+        name: obj.name,
         password: obj.password,
-        userName: obj.userName,
-        name: obj.name
+        email: obj.email,
+        dateOfBirth: obj.dateOfBirth,
+        contactNumber: obj.contactNumber
     });
 
     let savedUser = await newUser.save();
 
     return savedUser;
+}
+async function deleteUser(userId) {
+    var query = { id: userId };
+    let deletedUser = await User.deleteOne(query,function(err, obj) {
+        if (err) {
+            console.log("errorrrrr")
+        }
+        console.log("1 document deleted");
+      });
+     return deletedUser;
+}
+async function updateUser(alarmHistory) {
+    var filter = {id: alarmHistory.id};
+    let updatedAlarmHistory = await User.findOneAndReplace(filter, alarmHistory, {
+        new: true,
+    });
+     return updatedAlarmHistory;
 }
 
 async function userLogin(userEmail,userPassword) {
@@ -42,9 +63,11 @@ async function userLogin(userEmail,userPassword) {
      if(typeof(user) != "undefined"){
          res = {
             "id": user.id,
-            "userName": user.userName,
+            "email": user.email,
             "password": user.password,
             "name": user.name,
+            "dateOfBirth": user.dateOfBirth,
+            "contactNumber": user.contactNumber,
             "logged": true 
          }
      }
