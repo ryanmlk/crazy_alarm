@@ -41,25 +41,31 @@ class AlarmScreen extends StatelessWidget {
                   color: CustomColors.primaryTextColor,
                   size: 40,
                 ),
-                Text(
-                  format.format(now),
-                  style: GoogleFonts.poppins(
-                    textStyle: TextStyle(
-                      color: CustomColors.primaryTextColor,fontSize: 70, fontWeight: FontWeight.w500
-                    )
+                DefaultTextStyle(
+                  style: TextStyle(),
+                  child: Text(
+                    format.format(now),
+                    style: GoogleFonts.poppins(
+                      textStyle: TextStyle(
+                        color: CustomColors.primaryTextColor,fontSize: 70, fontWeight: FontWeight.w500
+                      )
+                    ),
                   ),
                 ),
                 SizedBox(
                   width: 250,
-                  child: Text(
-                    "Alarm Name",
-                    maxLines: 3,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.poppins(
-                      textStyle: TextStyle(
-                        color: CustomColors.primaryTextColor,fontSize: 20, fontWeight: FontWeight.w500
-                      )
+                  child: DefaultTextStyle(
+                    style: TextStyle(),
+                    child: Text(
+                      "",
+                      maxLines: 3,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.poppins(
+                        textStyle: TextStyle(
+                          color: CustomColors.primaryTextColor,fontSize: 20, fontWeight: FontWeight.w500
+                        )
+                      ),
                     ),
                   ),
                 ),
@@ -68,7 +74,7 @@ class AlarmScreen extends StatelessWidget {
           ),
         ),
         RaisedButton(
-          child: Text("Snooze Alarm", style: TextStyle(fontSize: 20),),
+          child: Text("Snooze Alarm", style: TextStyle(fontSize: 20,color: Colors.white),),
           onPressed: () async {
           await AndroidAlarmManager.periodic(const Duration(seconds: 10), 1, setAlarm);
 
