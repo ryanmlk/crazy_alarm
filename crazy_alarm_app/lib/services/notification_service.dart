@@ -44,11 +44,12 @@ class NotificationService {
       DateTime.parse(time),
       location,
     );
+    print(tzDatetime.toString() + "" + location.toString());
     await flutterLocalNotificationsPlugin.zonedSchedule(
       id,
       title,
       body,
-      tzDatetime.toLocal(),
+      tzDatetime,
       const NotificationDetails(
         android: AndroidNotificationDetails('main_channel', 'Main Channel',
             channelDescription: 'Main channel notifications',
