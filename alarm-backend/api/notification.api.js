@@ -3,9 +3,18 @@ const mongoose = require('mongoose');
 
 var notificationSchema = mongoose.Schema({
     id: String,
-    datetime:String,
-    title:String,
-    message:String,
+    datetime:{
+        type: String,
+        required: true
+      },
+    title:{
+        type: String,
+        required: true
+      },
+    message:{
+        type: String,
+        required: true
+      },
     type:String
 });
 

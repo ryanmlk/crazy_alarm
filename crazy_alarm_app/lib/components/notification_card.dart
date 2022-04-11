@@ -34,14 +34,14 @@ class NotificationCard extends StatelessWidget {
                             color: CustomColors.secondaryTextColor,
                             fontSize: 15,
                             fontWeight: FontWeight.w300))),
-                Text(title,
+                Text(message,
                     textAlign: TextAlign.left,
                     style: GoogleFonts.poppins(
                         textStyle: TextStyle(
                             color: CustomColors.secondaryTextColor,
                             fontSize: 25,
                             fontWeight: FontWeight.w800))),
-                Text(message,
+                Text(title,
                     textAlign: TextAlign.left,
                     style: GoogleFonts.poppins(
                         textStyle: TextStyle(
