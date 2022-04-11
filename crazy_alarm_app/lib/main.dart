@@ -7,23 +7,24 @@ import 'package:crazy_alarm_app/screens/question_screen.dart';
 import 'package:crazy_alarm_app/screens/signup.dart';
 import 'package:crazy_alarm_app/services/notification_service.dart';
 import 'package:flutter/material.dart';
-import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'models/alarm.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey(debugLabel: "Main Navigator");
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   var initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
   var initializationSettings = InitializationSettings(android: initializationSettingsAndroid);
-  await flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: (String? payload) async {
-    if(payload != null) {
-      debugPrint('notification payload: ' + payload);
-    }
-  });
+
+  Future selectNotification(String? payload) async {
+      navigatorKey.currentState?.pushNamed('/alarm');
+  }
+
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: selectNotification);
+
   NotificationService().initNotification();
-  await AndroidAlarmManager.initialize();
 
   runApp(const MyApp());
 }
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Flutter Demo',
+        navigatorKey: navigatorKey,
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
