@@ -42,6 +42,10 @@ class UserService{
     if(userData['logged']){
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('loggedUser', userData['id']);
+      prefs.setString('email', payload['email']);
+      prefs.setString('contactNumber', payload['contactNumber']);
+      prefs.setString('name', payload['name']);
+      prefs.setString('dateOfBirth', payload['dateOfBirth']);
       prefs.setBool('isLogged', true);
     }
     return data;

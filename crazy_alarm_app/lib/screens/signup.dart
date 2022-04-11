@@ -107,7 +107,7 @@ class _SignUpPageState extends State<SignUpPage> {
             content: Text("Signed Up Successfully"),
             backgroundColor: Colors.green,
           );
-          Navigator.pushNamed(context, '/signup');Navigator.pushNamed(context, '/signup');
+          Navigator.pushNamed(context, '/');
         }
         else {
           snackBar = const SnackBar(

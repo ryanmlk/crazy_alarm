@@ -7,12 +7,13 @@ import 'package:crazy_alarm_app/constants/themes.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../model/user.dart';
 import '../services/user_service.dart';
 import 'main_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
-  static String routeName = '/signup';
+  static String routeName = '/profile';
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -21,21 +22,32 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   bool isLoggedIn = false;
-  @override
-  void initState() {
-    super.initState();
-    updateLog();
-  }
+  late User userF = UserPreferences.myUser;
+
   updateLog() async {
     UserService userService = UserService(url: 'users/login');
     bool temp = await userService.checkLogin();
     setState(()  {
       isLoggedIn = temp;
     });
+
+  }
+  getUser() async {
+    UserPreferences userPreferences = new UserPreferences();
+    User temp = await userPreferences.getUser();
+    setState(()  {
+    userF = temp;
+    });
+  }
+  @override
+  void initState() {
+    super.initState();
+    updateLog();
+    getUser();
   }
   @override
   Widget build(BuildContext context) {
-      final user = UserPreferences.myUser;
+      final user = userF;
       return ListView(
         physics: const BouncingScrollPhysics(),
         children: [
