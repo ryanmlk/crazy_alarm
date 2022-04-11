@@ -32,12 +32,20 @@ const router = new Router({
     ctx.response.status = 201;
     ctx.body = user;
    });
+   
+   //Update
+   router.patch('/', async ctx => {
+    let alarm = ctx.request.body;
+    alarm = await UserApi.updateUser(alarm);
+    ctx.response.status = 201;
+    ctx.body = alarm;
+    });
 
+    //delete
    router.delete('/delete', async ctx => {
     let user = ctx.request.body;
     ctx.body = await UserApi.deleteUser(user.id);
-}
-)
+    });
 
 
 module.exports = router;
