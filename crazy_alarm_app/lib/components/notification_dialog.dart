@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:crazy_alarm_app/constants/themes.dart';
@@ -35,6 +36,7 @@ class _NotificationDialogState extends State<NotificationDialog> {
   }
 
   final random = Random();
+  var error = null;
   final _timeValue = TextEditingController();
   final titleController = TextEditingController();
   final messageController = TextEditingController();
@@ -270,7 +272,18 @@ class _NotificationDialogState extends State<NotificationDialog> {
                     ),
                   )
               ],
-            )
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            if (error != null)
+              Text(
+                error,
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 18
+                ),
+              )
           ],
         ),
       ),
@@ -285,7 +298,18 @@ class _NotificationDialogState extends State<NotificationDialog> {
         messageController.text,
         titleController.text,
         _timeValue.text));
+    print('trrererer' + response.toString());
 
+    if(response != 201) {
+      setState(() {
+        error = "[ERROR]: Please fill in all the fields";
+      });
+      var timer = new Timer(const Duration(seconds: 3), () {
+        setState(() {
+          error = null;
+        });
+      });
+    }
     NotificationService().showNotification(
       id,
       titleController.text,
@@ -313,6 +337,17 @@ class _NotificationDialogState extends State<NotificationDialog> {
         messageController.text,
         titleController.text,
         _timeValue.text));
+    print('updddd' + response.toString());
+    if(response == 500) {
+      setState(() {
+        error = "[ERROR]: Please fill in all the fields";
+      });
+      var timer = new Timer(const Duration(seconds: 3), () {
+        setState(() {
+          error = null;
+        });
+      });
+    }
     if (response != 500) {
       NotificationService()
           .CancelNotification(int.parse(widget.notificationConfig.id));

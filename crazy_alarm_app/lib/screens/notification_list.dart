@@ -5,6 +5,7 @@ import 'package:crazy_alarm_app/models/notification.dart';
 import 'package:crazy_alarm_app/services/notification_data_service.dart';
 import 'package:flutter/material.dart';
 import 'package:crazy_alarm_app/constants/themes.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class NotificationListScreen extends StatefulWidget {
@@ -20,7 +21,21 @@ class _NotificationListScreen extends State<NotificationListScreen> {
   @override
   void initState() {
     super.initState();
-    notificationData = _notificationService.getNotifications();
+
+    try {
+      notificationData = _notificationService.getNotifications();
+    } catch (error) {
+      Fluttertoast.showToast(
+          msg: "An error Occurred",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM_RIGHT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+    }
+
   }
 
   @override
