@@ -134,8 +134,15 @@ class _NotificationListScreen extends State<NotificationListScreen> {
                   return Text("${snapshot.error}");
                 }
                 // By default show a loading spinner.
-                return const CircularProgressIndicator(
-                  color: Colors.red,
+                return const Align(
+                  alignment: Alignment.center,
+                  child: SizedBox(
+                    height: 100.0,
+                    width: 100.0,
+                    child: CircularProgressIndicator(
+                      color: Colors.red,
+                    ),
+                  ),
                 );
               },
             ),

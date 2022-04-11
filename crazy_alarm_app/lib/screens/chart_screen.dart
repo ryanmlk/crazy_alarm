@@ -18,13 +18,23 @@ class _ChartScreen extends State<ChartScreen> {
   @override
   void initState() {
     super.initState();
-    alarmHistoryData = _alarmHistoryService.getAlarmHistory();
+    try {
+      alarmHistoryData = _alarmHistoryService.getAlarmHistory();
+    } on Exception catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("ERROR: Can not contact server"),
+        backgroundColor: Colors.red,
+      ));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
+        SizedBox(
+          height: 10,
+        ),
         Text(
             'Sleep History',
             style: GoogleFonts.poppins(
@@ -34,24 +44,31 @@ class _ChartScreen extends State<ChartScreen> {
             )
         ),
         SizedBox(
-          height: 100,
+          height: 90,
         ),
-        Container(
-          height: 320,
-          width: 380,
-          child: FutureBuilder<List<AlarmHistory>>(
-            future: alarmHistoryData,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return DateChart(snapshot.data!);
-              } else if (snapshot.hasError) {
-                return Text("${snapshot.error}");
-              }
-              // By default show a loading spinner.
-              return const CircularProgressIndicator(
-                color: Colors.red,
-              );
-            },
+        Align(
+          alignment: Alignment.center,
+          child: Container(
+            height: 320,
+            width: 380,
+            child: FutureBuilder<List<AlarmHistory>>(
+              future: alarmHistoryData,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return DateChart(snapshot.data!);
+                } else if (snapshot.hasError) {
+                  return Text("${snapshot.error}");
+                }
+                // By default show a loading spinner.
+                return const SizedBox(
+                  height: 100.0,
+                  width: 100.0,
+                  child: CircularProgressIndicator(
+                    color: Colors.red,
+                  ),
+                );
+              },
+            ),
           ),
         )
       ],

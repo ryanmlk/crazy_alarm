@@ -301,14 +301,10 @@ class _NotificationDialogState extends State<NotificationDialog> {
     print('trrererer' + response.toString());
 
     if(response != 201) {
-      setState(() {
-        error = "[ERROR]: Please fill in all the fields";
-      });
-      var timer = new Timer(const Duration(seconds: 3), () {
-        setState(() {
-          error = null;
-        });
-      });
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("ERROR: Please fill in all the fields"),
+        backgroundColor: Colors.red,
+      ));
     }
     NotificationService().showNotification(
       id,
@@ -339,14 +335,10 @@ class _NotificationDialogState extends State<NotificationDialog> {
         _timeValue.text));
     print('updddd' + response.toString());
     if(response == 500) {
-      setState(() {
-        error = "[ERROR]: Please fill in all the fields";
-      });
-      var timer = new Timer(const Duration(seconds: 3), () {
-        setState(() {
-          error = null;
-        });
-      });
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("ERROR: Please fill in all the fields"),
+        backgroundColor: Colors.red,
+      ));
     }
     if (response != 500) {
       NotificationService()
