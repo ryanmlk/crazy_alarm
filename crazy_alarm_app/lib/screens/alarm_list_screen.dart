@@ -45,33 +45,30 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
           const SizedBox(height: 40),
           SizedBox(
             height: 450,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: FutureBuilder <List<AlarmConfig>>(
-                future: alarmData,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    List<AlarmConfig>?  data = snapshot.data;
-                    return
-                      ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: data!.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Container(
-                              child: AlarmCard(
-                                  alarm: snapshot.data![index]
-                              ),
-                              );
-                          }
-                      );
-                  } else if (snapshot.hasError) {
-                    return Text("${snapshot.error}");
-                  }
-                  // By default show a loading spinner.
-                  return CircularProgressIndicator();
-                },
-              ),
+            child: FutureBuilder <List<AlarmConfig>>(
+              future: alarmData,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  List<AlarmConfig>?  data = snapshot.data;
+                  return
+                    ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: data!.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return AlarmCard(
+                              alarm: snapshot.data![index]
+                          );
+                        }
+                    );
+                } else if (snapshot.hasError) {
+                  return Text("${snapshot.error}");
+                }
+                // By default show a loading spinner.
+                return const SizedBox(width: 450, child: CircularProgressIndicator(
+                  strokeWidth: 10,
+                ));
+              },
             ),
           ),
           const SizedBox(height: 30),

@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:crazy_alarm_app/constants/themes.dart';
 import 'package:crazy_alarm_app/models/alarm_history.dart';
 import 'package:crazy_alarm_app/services/alarm_history_service.dart';
