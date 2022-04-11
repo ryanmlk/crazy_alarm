@@ -29,6 +29,7 @@ class NotificationDataService {
 
   Future<int> save(NotificationConfig notification) async {
     // var jsonResponse = null;
+    print('trrr' + notification.datetime);
     http.Response response = await http.post(Uri.parse(endpoint),headers:<String, String> {
       'Context-Type': 'application/json; charset=UTF-8',
     },body: <String,String> {

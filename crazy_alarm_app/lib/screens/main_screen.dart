@@ -1,5 +1,6 @@
 import 'package:crazy_alarm_app/constants/themes.dart';
 import 'package:crazy_alarm_app/screens/alarm_list_screen.dart';
+import 'package:crazy_alarm_app/screens/chart_screen.dart';
 import 'package:crazy_alarm_app/screens/clock_screen.dart';
 import 'package:crazy_alarm_app/screens/notification_list.dart';
 import 'package:crazy_alarm_app/screens/profile_screen.dart';
@@ -20,15 +21,17 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     final items = <Widget>[
-      const Icon(Icons.access_time, size: 30),
-      const Icon(Icons.alarm, size: 30),
-      const Icon(Icons.person, size: 30),
-      const Icon(Icons.facebook, size: 30)
+      const Icon(Icons.access_time, size: 24),
+      const Icon(Icons.alarm, size: 24),
+      const Icon(Icons.person, size: 24),
+      const Icon(Icons.bar_chart, size: 24),
+      const Icon(Icons.notifications, size: 24)
     ];
     final screens = [
       const ClockScreen(),
       const AlarmListScreen(),
       ProfileScreen(),
+      ChartScreen(),
       NotificationListScreen()
     ];
 

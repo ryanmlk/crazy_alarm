@@ -56,7 +56,8 @@ class _NotificationDialogState extends State<NotificationDialog> {
         minTime: DateTime.now(),
         maxTime: DateTime(2025, 6, 7), onChanged: (datetime) {
       setState(() {
-        _timeValue.text = DateFormat("yyyy-MM-dd hh:mm").format(datetime);
+        print('trrwweewew' + datetime.toString());
+        _timeValue.text = datetime.toString();
       });
       print('change $datetime');
     }, onConfirm: (date) {
@@ -67,6 +68,7 @@ class _NotificationDialogState extends State<NotificationDialog> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset:false,
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: CustomColors.sdAppBackgroundColor,
@@ -277,12 +279,13 @@ class _NotificationDialogState extends State<NotificationDialog> {
 
   _addNotification() async {
     var id = random.nextInt(1073741824);
+    print('trrr' + _timeValue.text);
     var response = await _notificationDataService.save(NotificationConfig(
         id.toString(),
         messageController.text,
         titleController.text,
         _timeValue.text));
-    print('trwelk');
+
     NotificationService().showNotification(
       id,
       titleController.text,

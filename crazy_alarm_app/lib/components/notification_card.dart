@@ -16,51 +16,43 @@ class NotificationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute<void>(
-              builder: (BuildContext context) => NotificationDialog(
-                  'MODIFY', NotificationConfig(id, message, title, datetime)),
-              fullscreenDialog: true,
-            ));
-      },
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                      DateFormat("yyyy-MM-dd hh:mm")
-                          .format(DateTime.parse(datetime)),
-                      style: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                              color: CustomColors.secondaryTextColor,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w300))),
-                  Text(title,
-                      style: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                              color: CustomColors.secondaryTextColor,
-                              fontSize: 25,
-                              fontWeight: FontWeight.w800))),
-                  Text(message,
-                      style: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                              color: CustomColors.secondaryTextColor,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w300))),
-                ],
-              ),
-              Icon(Icons.notifications,
-                  color: CustomColors.sdIconColor, size: 35)
-            ],
-          ),
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                    DateFormat("yyyy-MM-dd hh:mm")
+                        .format(DateTime.parse(datetime)),
+                    style: GoogleFonts.poppins(
+                        textStyle: TextStyle(
+                            color: CustomColors.secondaryTextColor,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w300))),
+                Text(title,
+                    textAlign: TextAlign.left,
+                    style: GoogleFonts.poppins(
+                        textStyle: TextStyle(
+                            color: CustomColors.secondaryTextColor,
+                            fontSize: 25,
+                            fontWeight: FontWeight.w800))),
+                Text(message,
+                    textAlign: TextAlign.left,
+                    style: GoogleFonts.poppins(
+                        textStyle: TextStyle(
+                            color: CustomColors.secondaryTextColor,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w300))),
+              ],
+            ),
+            Icon(Icons.notifications,
+                color: CustomColors.sdIconColor, size: 35)
+          ],
         ),
       ),
     );
