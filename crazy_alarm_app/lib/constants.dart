@@ -1,0 +1,1 @@
+const apiUrl = 'https://crazy-alarm-api.herokuapp.com';
