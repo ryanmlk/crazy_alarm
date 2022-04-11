@@ -8,9 +8,20 @@ import 'package:crazy_alarm_app/screens/signup.dart';
 import 'package:crazy_alarm_app/services/notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'models/alarm.dart';
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  var initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
+  var initializationSettings = InitializationSettings(android: initializationSettingsAndroid);
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: (String? payload) async {
+    if(payload != null) {
+      debugPrint('notification payload: ' + payload);
+    }
+  });
   NotificationService().initNotification();
   await AndroidAlarmManager.initialize();
 
@@ -29,7 +40,7 @@ class MyApp extends StatelessWidget {
         initialRoute: MainScreen.routeName,
         routes: {
             MainScreen.routeName: (context) => const MainScreen(),
-            AlarmManageScreen.routeName: (context) => const AlarmManageScreen(),
+            AlarmManageScreen.routeName: (context) => AlarmManageScreen(mode_new: true, alarm: AlarmConfig('','','',false,[])),
             QuestionScreen.routeName: (context) => const QuestionScreen(),
             AlarmScreen.routeName: (context) => const AlarmScreen(),
             Login.routeName: (context) => const Login(),

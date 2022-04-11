@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:crazy_alarm_app/components/alarm_card.dart';
 import 'package:crazy_alarm_app/models/alarm.dart';
 import 'package:crazy_alarm_app/services/alarm_data_service.dart';
@@ -21,6 +23,8 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
     super.initState();
     alarmData =  _alarmService.getAlarms();
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -56,11 +60,7 @@ class _AlarmListScreenState extends State<AlarmListScreen> {
                           itemBuilder: (BuildContext context, int index) {
                             return Container(
                               child: AlarmCard(
-                                  snapshot.data![index].id,
-                                  snapshot.data![index].title,
-                                  snapshot.data![index].time,
-                                  snapshot.data![index].active,
-                                  snapshot.data![index].repeat
+                                  alarm: snapshot.data![index]
                               ),
                               );
                           }

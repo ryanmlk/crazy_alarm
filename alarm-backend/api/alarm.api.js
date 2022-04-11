@@ -2,7 +2,6 @@ const uuid = require('uuid');
 const mongoose = require('mongoose');
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
-mongoose.connect('mongodb://localhost/shoppingDb');
 const alarmSchema = require('../models/alarmModel')
 
 const addAlarm =  async obj => {
