@@ -1,4 +1,3 @@
-import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:crazy_alarm_app/components/alarm_repeat_dialog.dart';
 import 'package:crazy_alarm_app/models/alarm.dart';
 import 'package:crazy_alarm_app/screens/alarm_screen.dart';
@@ -365,6 +364,7 @@ class _AlarmManageScreenState extends State<AlarmManageScreen> {
     var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
       'alarm_notif',
       'alarm_notif',
+      sound: RawResourceAndroidNotificationSound('ringtone'),
       icon: 'app_icon',
       largeIcon: DrawableResourceAndroidBitmap('app_icon'),
     );
@@ -372,7 +372,7 @@ class _AlarmManageScreenState extends State<AlarmManageScreen> {
         android: androidPlatformChannelSpecifics);
 
     await flutterLocalNotificationsPlugin.schedule(0, alarm.title, alarm.time,
-        scheduledNotificationDateTime, platformChannelSpecifics);
+        scheduledNotificationDateTime, platformChannelSpecifics, payload: "Test");
   }
 
 }

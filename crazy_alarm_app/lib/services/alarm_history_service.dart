@@ -11,17 +11,21 @@ class AlarmHistoryService {
 
   Future<List<AlarmHistory>> getAlarmHistory() async {
     List<AlarmHistory> alarmHistoryList = [];
-    final response = await http.get(Uri.parse(endpoint));
+    try {
+      final response = await http.get(Uri.parse(endpoint));
 
-    if (response.statusCode == 200) {
-      final jsonResponse = convert.jsonDecode(response.body);
-      for (var alarmHistory in jsonResponse) {
-        alarmHistoryList.add(AlarmHistory(
-            alarmHistory['id'], alarmHistory['day'], alarmHistory['time']));
+      if (response.statusCode == 200) {
+        final jsonResponse = convert.jsonDecode(response.body);
+        for (var alarmHistory in jsonResponse) {
+          alarmHistoryList.add(AlarmHistory(
+              alarmHistory['id'], alarmHistory['day'], alarmHistory['time']));
+        }
+        return alarmHistoryList;
+      } else {
+        throw Exception('Error occured');
       }
-      return alarmHistoryList;
-    } else {
-      throw Exception('Error occured');
+    } catch (error) {
+      throw Error();
     }
   }
 

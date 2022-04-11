@@ -64,9 +64,6 @@ class NotificationDataService {
       'title': notification.title,
       'message': notification.message,
       'datetime': notification.datetime    });
-    if (response.statusCode != 201) {
-      return Future.error("error: status code ${response.statusCode}");
-    }
     return response.statusCode;
   }
 }
