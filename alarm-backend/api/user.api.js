@@ -74,4 +74,4 @@ async function userLogin(userEmail,userPassword) {
      return res;
 }
 
-module.exports = {userSignUp,userLogin};
+module.exports = {userSignUp,userLogin,updateUser,deleteUser};
