@@ -18,7 +18,7 @@ class _QuestionFormState extends State<QuestionScreen> {
   final myController = TextEditingController();
   int num1 = Random().nextInt(100);
   int num2 = Random().nextInt(100);
-  int operator = Random().nextInt(4);
+  int operator = Random().nextInt(3);
   String operatorString = 'ss';
   late int answer;
 
@@ -27,8 +27,8 @@ class _QuestionFormState extends State<QuestionScreen> {
     super.initState();
     switch (operator) {
       case 0:
-        answer = (num1 / num2) as int;
-        operatorString = '$num1 / $num2';
+        answer = (num1 - num2);
+        operatorString = '$num1 - $num2';
         break;
       case 1:
         answer = (num1 * num2);
@@ -115,6 +115,12 @@ class _QuestionFormState extends State<QuestionScreen> {
   }
 
   void onAnswerSubmit() {
+    if (!_isNumeric(myController.text)){
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("ERROR: Please fill in all the fields"),
+        backgroundColor: Colors.red,
+      ));
+    }
     setState(() {
       if (answer == int.parse(myController.text)) {
         final random = Random();
@@ -124,8 +130,17 @@ class _QuestionFormState extends State<QuestionScreen> {
             id.toString(), DateTime.now().toString(), time.toString()));
         Navigator.pushNamed(context, '/');
       } else {
-        Navigator.pushNamed(context, '/question');
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("ERROR: Please fill in all the fields"),
+          backgroundColor: Colors.red,
+        ));
       }
     });
+  }
+  bool _isNumeric(String str) {
+    if(str == null) {
+      return false;
+    }
+    return double.tryParse(str) != null;
   }
 }
