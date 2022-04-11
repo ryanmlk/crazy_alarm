@@ -29,6 +29,23 @@ const userSignUp =  async obj => {
 
     return savedUser;
 }
+async function deleteUser(userId) {
+    var query = { id: userId };
+    let deletedUser = await User.deleteOne(query,function(err, obj) {
+        if (err) {
+            console.log("errorrrrr")
+        }
+        console.log("1 document deleted");
+      });
+     return deletedUser;
+}
+async function updateUser(alarmHistory) {
+    var filter = {id: alarmHistory.id};
+    let updatedAlarmHistory = await User.findOneAndReplace(filter, alarmHistory, {
+        new: true,
+    });
+     return updatedAlarmHistory;
+}
 
 async function userLogin(userEmail,userPassword) {
     let user = await User.findOne({ email: userEmail, password: userPassword }, function(err, response){
@@ -50,7 +67,7 @@ async function userLogin(userEmail,userPassword) {
             "password": user.password,
             "name": user.name,
             "dateOfBirth": user.dateOfBirth,
-            "contactNumber": user.dateOfBirth,
+            "contactNumber": user.contactNumber,
             "logged": true 
          }
      }

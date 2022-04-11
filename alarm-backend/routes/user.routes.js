@@ -33,4 +33,11 @@ const router = new Router({
     ctx.body = user;
    });
 
+   router.delete('/delete', async ctx => {
+    let user = ctx.request.body;
+    ctx.body = await UserApi.deleteUser(user.id);
+}
+)
+
+
 module.exports = router;
