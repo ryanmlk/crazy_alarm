@@ -22,7 +22,7 @@ const userSignUp =  async obj => {
         password: obj.password,
         email: obj.email,
         dateOfBirth: obj.dateOfBirth,
-        contactNumber: obj.con
+        contactNumber: obj.contactNumber
     });
 
     let savedUser = await newUser.save();
@@ -46,9 +46,11 @@ async function userLogin(userEmail,userPassword) {
      if(typeof(user) != "undefined"){
          res = {
             "id": user.id,
-            "userName": user.userName,
+            "email": user.email,
             "password": user.password,
             "name": user.name,
+            "dateOfBirth": user.dateOfBirth,
+            "contactNumber": user.dateOfBirth,
             "logged": true 
          }
      }
