@@ -61,8 +61,8 @@ class _ChartScreen extends State<ChartScreen> {
                 }
                 // By default show a loading spinner.
                 return const SizedBox(
-                  height: 100.0,
-                  width: 100.0,
+                  height: 50.0,
+                  width: 50.0,
                   child: CircularProgressIndicator(
                     color: Colors.red,
                   ),
